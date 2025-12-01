@@ -2,21 +2,23 @@ pipeline {
     agent any
 
     stages {
-        stage('Install & Build') {
+        stage('build') {
             steps {
                 bat '''
-                    echo Listing project files...
+                    echo Listing files...
                     dir
 
-                    echo Checking Node & NPM version...
+                    echo Checking Node & npm version...
                     node --version
                     npm --version
 
                     echo Installing dependencies...
                     npm install
 
-                    echo Building project...
+                    echo Building...
                     npm run build
+
+                    echo Done!
                 '''
             }
         }
