@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
                 // List files
                 bat 'echo Listing files... & dir'
@@ -10,13 +10,13 @@ pipeline {
                 // Check Node and npm versions
                 bat 'echo Checking Node and npm version... & node --version & npm --version'
 
-                // Clean previous dependencies (optional, ensures clean install)
+                // Clean previous dependencies
                 bat 'echo Cleaning old node_modules... & if exist node_modules rmdir /s /q node_modules'
 
                 // Install dependencies
                 bat 'echo Installing dependencies... & npm install'
 
-                // Build project (ensures PATH includes node_modules/.bin)
+                // Build project
                 bat '''
                     echo Building project...
                     set PATH=%CD%\\node_modules\\.bin;%PATH%
@@ -25,10 +25,19 @@ pipeline {
             }
         }
 
-        stage('Test') {
+        stage('Test Build Output') {
             steps {
-                bat 'echo Test Stage'
+                // Windows way to check if build/index.html exists
+                bat '''
+                    if exist build\\index.html (
+                        echo File exists: build\\index.html
+                    ) else (
+                        echo ERROR: build\\index.html not found!
+                        exit 1
+                    )
+                '''
             }
         }
     }
 }
+
