@@ -25,12 +25,11 @@ pipeline {
             }
         }
 
-        stage('Test Build Output') {
+        stage('Verify Build Output') {
             steps {
-                // Windows way to check if build/index.html exists
                 bat '''
                     if exist build\\index.html (
-                        echo File exists: build\\index.html
+                        echo Build output OK: build\\index.html
                     ) else (
                         echo ERROR: build\\index.html not found!
                         exit 1
@@ -38,6 +37,12 @@ pipeline {
                 '''
             }
         }
+
+        stage('Run Tests') {
+            steps {
+                // Just run npm test normally
+                bat 'echo Running tests... & npm test'
+            }
+        }
     }
 }
-
