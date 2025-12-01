@@ -24,5 +24,11 @@ pipeline {
                 '''
             }
         }
+
+        stage('Test') {
+            steps {
+                bat 'echo Test Stage'
+            }
+        }
     }
 }
