@@ -13,7 +13,7 @@ pipeline {
                     npm --version
 
                     echo Installing dependencies...
-                    npm install
+                    npm ci
 
                     echo Building project...
                     npm run build
